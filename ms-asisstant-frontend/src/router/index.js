@@ -36,6 +36,10 @@ import Notification from "@/pages/admin/components/Notification.vue";
 import LoginPage from "@/pages/auth/LoginView.vue";
 import RegisterView from "@/pages/auth/RegisterView.vue";
 
+import LoginViewStudent from "@/pages/auth/studentScreen/LoginViewStudent.vue";
+import SignupViewStudent from "@/pages/auth/studentScreen/SignupViewStudent.vue";
+
+
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes: [
@@ -67,6 +71,19 @@ const router = createRouter({
       component: LoginPage,
       meta: { guest: true },
     },
+
+    {
+      path: "/student/signup",
+      name: "signupStudent",
+      component: SignupViewStudent,
+    },
+    {
+      path: "/student/login",
+      name: "loginStudent",
+      component: LoginViewStudent,
+    },
+
+
     {
       path: "/register",
       name: "register",
