@@ -6,6 +6,7 @@ use App\Http\Controllers\{
     UserController,RoleController,PermissionController,TeacherController
 };
 use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\Auth\StudentRegisterController;
 use App\Http\Controllers\ClassController;
 use App\Http\Controllers\Dashboard\AdminController1;
 use App\Http\Controllers\Dashboard\UserController1;
@@ -42,6 +43,11 @@ Route::group(['middleware' => ['api']], function () {
     Route::post('/class/attach/subject/{id}', [ClassController::class, 'attachSubject']);
 
 
+     //student
+    Route::get('/student', function () {
+        return 'baby step';
+    });
+
     //subject routes
     Route::get('/subjects', [SubjectController::class, 'index']);
     Route::get('/subjects/classes', [SubjectController::class, 'subjectWithClasses']);
@@ -65,6 +71,7 @@ Route::group(['middleware' => ['api']], function () {
 
     Route::post('user-register', [AuthController::class, 'userRegister']);
     Route::post('admin-register', [AuthController::class, 'adminRegister']);
+    Route::post('/student-register', [StudentRegisterController::class, 'register']);
     Route::post('login', [AuthController::class, 'login']);
 
 
@@ -120,4 +127,7 @@ Route::prefix('auth')->group(function () {
         Route::get('teacher/dashboard', [TeacherController1::class, 'dashboard']);
         // Add more teacher routes here
     });
+
+
+
 });
