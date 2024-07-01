@@ -98,10 +98,10 @@
 import { ref } from "vue";
 import axios from 'axios';
 import { useRouter } from "vue-router";
-import taBtn from "../../../components/taBtn.vue";
-import taCard from "../../../components/taCard.vue";
-import taFileUpload from "../../../components/taFileUpload.vue";
-import taTextField from "../../../components/taTextField.vue";
+import taBtn from "./../../../components/taBtn.vue";
+import taCard from "./../../../components/taCard.vue";
+import taFileUpload from "./../../../components/taFileUpload.vue";
+import taTextField from "./../../../components/taTextField.vue";
 
 const router = useRouter();
 
@@ -181,7 +181,7 @@ const submitForm = () => {
       axios.post('http://localhost:8000/api/register', formData)
         .then(response => {
           console.log(response.data);
-          router.push('/student/login');
+          router.push('/admin/login');
         })
         .catch(error => {
           console.error(error);
@@ -194,7 +194,7 @@ const submitForm = () => {
 
 
 const toggleMode = () => {
-  router.push("/student/login");
+  router.push("/admin/login");
 };
 </script>
 
@@ -203,6 +203,7 @@ const toggleMode = () => {
   display: flex;
   justify-content: center;
   align-items: center;
+  background-image: url(/teacher-asisst-frontend/src/pages/auth/adminScreen/SignupViewAdmin.vue);
   background-size: cover;
   background-position: center;
   padding: 20px;
@@ -216,6 +217,7 @@ const toggleMode = () => {
   background-color: rgba(255, 255, 255, 0.9);
   border-radius: 20px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background-image: url("@assets/ta-classroom.jpg");
 }
 
 .title {
@@ -283,3 +285,4 @@ const toggleMode = () => {
   margin-top: 10px;
 }
 </style>
+../../../components/taBtn.vue../../../components/taCard.vue../../../components/taFileUpload.vue../../../components/taTextField.vue

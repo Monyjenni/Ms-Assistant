@@ -9,15 +9,15 @@
         <v-form ref="formRef" @submit.prevent="submitForm" class="login-form">
           <div class="form-group">
             <taTextField
-              v-model="userData.userName"
-              label="Username"
-              :rules="usernameRules"
+              v-model="adminData.email"
+              label="Email"
+              :rules="emailRules"
               required
             ></taTextField>
           </div>
           <div class="form-group">
             <taTextField
-              v-model="userData.password"
+              v-model="adminData.password"
               label="Password"
               type="password"
               :rules="passwordRules"
@@ -28,8 +28,11 @@
             <input type="checkbox" id="register" v-model="register" />
             <label for="register">Remember me</label>
           </div>
+          <div class="center">
+            <span>Sign up new account? <a href="#" @click="toggleMode">Sign up</a></span>
+          </div>
           <div class="form-group full-width-button">
-            <taBtn type="submit" @click="submitForm" label="Login" />
+            <taBtn type="submit" @click="submitForm" label="Login as an admin" />
           </div>
         </v-form>
       </div>
@@ -46,25 +49,21 @@ import taTextField from "./../../../components/taTextField.vue";
 
 const router = useRouter();
 
-const userData = ref({
-  userName: "",
+const adminData = ref({
+  email: "",
   password: "",
 });
 
 const register = ref(false);
 
-const usernameRules = [
-  v => !!v || 'Username is required',
-  v => v.length >= 3 || 'Username must be at least 3 characters',
-  v => /^[a-zA-Z0-9_]+$/.test(v) || 'Username can only contain alphanumeric characters and underscores',
+const emailRules = [
+  v => !!v || 'Email is required',
+  v => /.+@.+\..+/.test(v) || 'Email must be valid',
 ];
 
 const passwordRules = [
   v => !!v || 'Password is required',
   v => v.length >= 6 || 'Password must be at least 6 characters',
-  v => /[A-Z]/.test(v) || 'Password must contain at least one uppercase letter',
-  v => /[a-z]/.test(v) || 'Password must contain at least one lowercase letter',
-  v => /\d/.test(v) || 'Password must contain at least one number',
 ];
 
 const formRef = ref(null);
@@ -72,12 +71,16 @@ const formRef = ref(null);
 const submitForm = () => {
   formRef.value.validate().then(success => {
     if (success) {
-      console.log("Admin login submitted:", userData.value);
-      router.push("");
+      console.log("Admin login submitted:");
+      router.push("/admin/dashboard");
     } else {
       console.log("Form is not valid");
     }
   });
+};
+
+const toggleMode = () => {
+  router.push("/admin/signup");
 };
 </script>
 
@@ -150,4 +153,11 @@ const submitForm = () => {
   color: #004b8d;
   font-size: 15px;
 }
+
+.center {
+  text-align: center;
+  font-size: 18px;
+  margin-bottom: 20px;
+}
 </style>
+../../../components/taBtn.vue../../../components/taCard.vue../../../components/taTextField.vue
