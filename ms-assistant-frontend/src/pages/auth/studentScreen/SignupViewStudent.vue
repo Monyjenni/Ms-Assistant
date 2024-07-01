@@ -55,9 +55,6 @@
           </div>
           <div class="right-column">
             <div class="form-group">
-              <taFileUpload @fileChange="handleFileChange" />
-            </div>
-            <div class="form-group">
               <taTextField
                 v-model="signupData.universityName"
                 type="text"
@@ -79,9 +76,7 @@
         </div>
         <div class="checkbox">
           <input type="checkbox" id="terms" v-model="terms" />
-          <label for="terms"
-            >I agree to the terms <a href="#">Teacher Assistant</a></label
-          >
+          <label for="terms">I agree to the terms <a href="#">Teacher Assistant</a></label>
         </div>
         <div class="center">
           <span>Already have an account? <a href="#" @click="toggleMode">Log In</a></span>
@@ -98,10 +93,9 @@
 import { ref } from "vue";
 import axios from 'axios';
 import { useRouter } from "vue-router";
-import taBtn from "./../../../components/taBtn.vue";
-import taCard from "./../../../components/taCard.vue";
-import taFileUpload from "./../../../components/taFileUpload.vue";
-import taTextField from "./../../../components/taTextField.vue";
+import taBtn from "../../../components/taBtn.vue";
+import taCard from "../../../components/taCard.vue";
+import taTextField from "../../../components/taTextField.vue";
 
 const router = useRouter();
 
@@ -113,12 +107,7 @@ const signupData = ref({
   phoneNumber: "",
   universityName: "",
   faculty: "",
-  profilePicture: null,
 });
-
-const handleFileChange = (file) => {
-  signupData.value.profilePicture = file;
-};
 
 const emailRules = [
   (v) => !!v || "Email is required",
@@ -166,22 +155,20 @@ const formRef = ref(null);
 const submitForm = () => {
   formRef.value.validate().then((success) => {
     if (success) {
-      const formData = new FormData();
-      formData.append('firstName', signupData.value.firstName);
-      formData.append('email', signupData.value.email);
-      formData.append('phoneNumber', signupData.value.phoneNumber);
-      formData.append('password', signupData.value.password);
-      formData.append('password_confirmation', signupData.value.confirmPassword);
-      formData.append('universityName', signupData.value.universityName);
-      formData.append('faculty', signupData.value.faculty);
-      if (signupData.value.profilePicture) {
-        formData.append('profilePicture', signupData.value.profilePicture);
-      }
+      const formData = {
+        firstName: signupData.value.firstName,
+        email: signupData.value.email,
+        phoneNumber: signupData.value.phoneNumber,
+        password: signupData.value.password,
+        password_confirmation: signupData.value.confirmPassword,
+        universityName: signupData.value.universityName,
+        faculty: signupData.value.faculty,
+      };
 
-      axios.post('http://localhost:8000/api/register', formData)
+      axios.post('http://localhost:8000/api/student-register', formData)
         .then(response => {
           console.log(response.data);
-          router.push('/admin/login');
+          router.push('/student/login');
         })
         .catch(error => {
           console.error(error);
@@ -192,9 +179,8 @@ const submitForm = () => {
   });
 };
 
-
 const toggleMode = () => {
-  router.push("/admin/login");
+  router.push("/student/login");
 };
 </script>
 
@@ -203,7 +189,6 @@ const toggleMode = () => {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-image: url(/teacher-asisst-frontend/src/pages/auth/adminScreen/SignupViewAdmin.vue);
   background-size: cover;
   background-position: center;
   padding: 20px;
@@ -217,7 +202,6 @@ const toggleMode = () => {
   background-color: rgba(255, 255, 255, 0.9);
   border-radius: 20px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  background-image: url("@assets/ta-classroom.jpg");
 }
 
 .title {
