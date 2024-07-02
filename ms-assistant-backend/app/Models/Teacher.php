@@ -3,21 +3,17 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
-use App\Models\User;
-use App\Models\Classes;
-use App\Models\Subject;
-use App\Models\Department;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
 
-class Teacher extends Model
+class Teacher extends Authenticatable
 {
-    use HasFactory;
-
+    use HasFactory, Notifiable;
 
     protected $fillable = [
         'first_name',
         'last_name',
-        'user_id',
+        'email',
         'phone',
         'dob',
         'gender',
@@ -26,30 +22,26 @@ class Teacher extends Model
 
     protected $casts = [
         'user_id' => 'integer',
-
     ];
 
+    // Relationships
     public function user()
     {
         return $this->belongsTo(User::class)->withDefault();
     }
 
-    public function classes()
+    public function classCourses()
     {
-        return $this->belongsToMany(Classes::class);
+        return $this->hasMany(ClassCourse::class);
     }
-    public function subject()
+
+    public function subjects()
     {
-        return $this->belongsTo(Subject::class);
+        return $this->hasMany(Subject::class);
     }
+
     public function department()
     {
         return $this->belongsTo(Department::class);
     }
-
-
-
-
-
-
 }
