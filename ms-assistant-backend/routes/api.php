@@ -13,6 +13,8 @@ use App\Http\Controllers\Dashboard\UserController1;
 use App\Http\Controllers\Dashboard\TeacherController1;
 use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\SubjectController;
+use App\Http\Controllers\ClassCourseController;
+use App\Http\Controllers\ClassCourseRequestController;
 
 
 /*
@@ -100,12 +102,24 @@ Route::group(['middleware' => ['api']], function () {
     Route::put('/update-teacher/{id}', [TeacherController::class, 'updateTeacher']);
     Route::delete('/delete-teacher/{id}', [TeacherController::class, 'deleteTeacher']);
 
+    // Routes for ClassCourse
+    Route::get('/class-courses', [ClassCourseController::class, 'index']);
+    Route::get('/class-courses/{id}', [ClassCourseController::class, 'show']);
+    Route::post('/class-courses', [ClassCourseController::class, 'store']);
+    Route::put('/class-courses/{id}', [ClassCourseController::class, 'update']);
+    Route::delete('/class-courses/{id}', [ClassCourseController::class, 'destroy']);
+
+    // Routes for ClassCourseRequest
+    Route::get('/class-course-requests', [ClassCourseRequestController::class, 'index']);
+    Route::get('/class-course-requests/{id}', [ClassCourseRequestController::class, 'show']);
+    Route::post('/class-course-requests', [ClassCourseRequestController::class, 'store']);
+    Route::put('/class-course-requests/{id}', [ClassCourseRequestController::class, 'update']);
+    Route::delete('/class-course-requests/{id}', [ClassCourseRequestController::class, 'destroy']);
 
 });
 
 
 Route::prefix('auth')->group(function () {
-
 
 
     Route::middleware('auth:sanctum')->group(function () {
@@ -127,7 +141,5 @@ Route::prefix('auth')->group(function () {
         Route::get('teacher/dashboard', [TeacherController1::class, 'dashboard']);
         // Add more teacher routes here
     });
-
-
 
 });
